@@ -45,7 +45,10 @@ var $taskVue = new Vue({
             { name: 'apiUrl', text: 'ApiUrl', value: '', placeholder: "远程调用接口URL" },
             { name: 'authKey', text: 'header(key)', value: '', placeholder: '请求header验证的Key' },
             { name: 'authValue', text: 'header(value)', value: '', placeholder: '请求header验证的Key' },
-            { name: 'requestType', text: '请求方式', value: '', placeholder: 'post/get', type: 'select' },
+            {
+                name: 'requestType', text: '请求方式', value: '', onChange: (data,value) => {
+                }, placeholder: 'post/get', type: 'select'
+            },
             { name: 'describe', text: '描述', value: '', type: 'textarea' }
         ],
         columns: [
@@ -170,6 +173,11 @@ var $taskVue = new Vue({
         ],
         rows: []
     }, methods: {
+        onChange(item, value) {
+            if (item.onChange && typeof item.onChange == "function") {
+                item.onChange(value, item);
+            }
+        },
         getColumns: function () {
             var columns = [];
             this.columns.forEach(function (item) {
